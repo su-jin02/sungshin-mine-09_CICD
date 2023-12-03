@@ -11,10 +11,8 @@ ENV NVM_DIR /usr/local/nvm
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN mkdir $NVM_DIR
-RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-RUN apt-get -y install nodejs
-CMD nvm install 18.15.0
-CMD nvm use 18.15.0
-CMD npm install
-CMD npm start 
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+RUN echo "source $NVM_DIR/nvm.sh && \
+    nvm install $NODE_VERSION && \
+    nvm alias default $NODE_VERSION && \
+    nvm use default" | bash
