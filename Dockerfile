@@ -11,4 +11,4 @@ RUN echo "source $NVM_DIR/nvm.sh && \
     nvm alias default $NODE_VERSION && \
     nvm use default" | bash
 RUN apt-get install -y npm && npm install -g npm@9.5.0 && npm install express
-CMD npm start
+RUN npm start
