@@ -2,7 +2,7 @@ const db = require("../models/index"),
     User = db.user;
 
 const nodemailer = require("nodemailer");
-const senderInfo = require("../config/senderInfo.json");
+//const senderInfo = require("../config/senderInfo.json");
 
 const verificationCode = Math.floor(100000 + Math.random() * 900000); //랜덤으로 6자리 인증번호 생성
 const bcrypt = require("bcrypt"); //비밀번호 암호화. 단방향 암호화. 복호화 불가능. 값 비교만 가능.
@@ -28,14 +28,14 @@ async function generateEmailController(req, res) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: senderInfo.user,
-            pass: senderInfo.pass
+            user: process.env.user,
+            pass: process.env.pass
         }
     });
 
     let fieldheader = `인증번호는: ` + verificationCode + `<br> ※인증과 회원가입 유효 시간은 5분입니다.※ <br>`
     const mailOptions = {
-        from: senderInfo.user,
+        from: process.env.user,
         to: email,
         subject: "성신마인 09번지_ 인증번호 메일",
         //text: "인증번호는: " + verificationCode,
