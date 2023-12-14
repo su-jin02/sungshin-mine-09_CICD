@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensourceteam6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opensourceteam6
+  template:
+    metadata:
+      labels:
+        app: opensourceteam6
+    spec:
+      containers:
+      - name: opensourceteam6
+        image: opensourceteam6/opensourceteam6:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: env-yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensourceteam6
+spec:
+  selector:
+    app: opensourceteam6
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
